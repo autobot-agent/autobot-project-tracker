@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autobot Project Tracker — Final Upgrade AI</title>
+  <style>
+    :root {
+      --bg: #0e0e12;
+      --surface: #16161c;
+      --surface2: #1e1e26;
+      --border: #2a2a38;
+      --accent: #7c6dfa;
+      --accent2: #b09bff;
+      --text: #e8e8f0;
+      --muted: #888899;
+      --green: #3ecf8e;
+      --yellow: #f5a623;
+      --red: #ff6b6b;
+      --blue: #4ea8de;
+      --purple: #b09bff;
+      --orange: #f5a623;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 14px;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #12121a 0%, #1a1428 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .header-left { display: flex; align-items: center; gap: 14px; }
+    .logo {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 16px; color: white;
+    }
+    .header-title { font-size: 18px; font-weight: 700; color: var(--text); }
+    .header-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+    .updated-badge {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .updated-badge span { color: var(--accent2); font-weight: 600; }
+
+    /* ── Layout ── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 28px 32px; }
+
+    /* ── Stats Row ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px; }
+    .stat-value { font-size: 28px; font-weight: 700; }
+    .stat-value.green { color: var(--green); }
+    .stat-value.yellow { color: var(--yellow); }
+    .stat-value.blue { color: var(--blue); }
+    .stat-value.purple { color: var(--purple); }
+
+    /* ── Section ── */
+    .section { margin-bottom: 36px; }
+    .section-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-title { font-size: 16px; font-weight: 700; }
+    .section-count {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2px 9px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── Filters ── */
+    .filters {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 16px;
+    }
+    .filter-group { display: flex; align-items: center; gap: 6px; }
+    .filter-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+    select {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 6px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+    }
+    select:focus { border-color: var(--accent); }
+    .filter-reset {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .filter-reset:hover { border-color: var(--accent); color: var(--accent2); }
+
+    /* ── Projects Grid ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 14px;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      transition: border-color .2s;
+      cursor: pointer;
+    }
+    .project-card:hover { border-color: var(--accent); }
+    .project-card-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .project-id { font-size: 10px; color: var(--muted); font-family: monospace; }
+    .project-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .project-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .project-meta {
+      display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+    }
+    .tag {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── Status Badges ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
+    .badge.in-progress { background: rgba(78,168,222,.15); color: var(--blue); border: 1px solid rgba(78,168,222,.3); }
+    .badge.in-progress::before { background: var(--blue); }
+    .badge.not-started { background: rgba(136,136,153,.1); color: var(--muted); border: 1px solid var(--border); }
+    .badge.not-started::before { background: var(--muted); }
+    .badge.on-hold { background: rgba(245,166,35,.15); color: var(--yellow); border: 1px solid rgba(245,166,35,.3); }
+    .badge.on-hold::before { background: var(--yellow); }
+    .badge.completed { background: rgba(62,207,142,.15); color: var(--green); border: 1px solid rgba(62,207,142,.3); }
+    .badge.completed::before { background: var(--green); }
+    .badge.cancelled { background: rgba(255,107,107,.15); color: var(--red); border: 1px solid rgba(255,107,107,.3); }
+    .badge.cancelled::before { background: var(--red); }
+
+    /* ── Priority Badges ── */
+    .priority { border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
+    .priority.critical { background: rgba(255,107,107,.15); color: var(--red); border: 1px solid rgba(255,107,107,.3); }
+    .priority.high { background: rgba(245,166,35,.15); color: var(--orange); border: 1px solid rgba(245,166,35,.3); }
+    .priority.medium { background: rgba(176,155,255,.15); color: var(--purple); border: 1px solid rgba(176,155,255,.3); }
+    .priority.low { background: rgba(62,207,142,.1); color: var(--green); border: 1px solid rgba(62,207,142,.2); }
+
+    /* ── Deliverables Table ── */
+    .del-table { width: 100%; border-collapse: collapse; }
+    .del-table thead th {
+      background: var(--surface2);
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      border-bottom: 1px solid var(--border);
+    }
+    .del-table thead th:first-child { border-radius: 8px 0 0 0; }
+    .del-table thead th:last-child { border-radius: 0 8px 0 0; }
+    .del-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .del-table tbody tr:hover { background: var(--surface2); }
+    .del-table tbody td {
+      padding: 12px 14px;
+      vertical-align: top;
+      font-size: 13px;
+    }
+    .del-id { font-size: 10px; color: var(--muted); font-family: monospace; }
+    .del-name { font-weight: 600; margin-bottom: 2px; }
+    .del-project { font-size: 11px; color: var(--accent2); }
+    .del-desc { font-size: 11px; color: var(--muted); max-width: 300px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 28px;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 16px;
+    }
+    .modal-close:hover { color: var(--text); border-color: var(--accent); }
+    .modal-id { font-size: 11px; color: var(--muted); font-family: monospace; margin-bottom: 6px; }
+    .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+    .modal-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+    .modal-section { margin-bottom: 18px; }
+    .modal-section-label {
+      font-size: 11px; color: var(--muted); text-transform: uppercase;
+      letter-spacing: .6px; margin-bottom: 6px; font-weight: 600;
+    }
+    .modal-section-content {
+      font-size: 13px; line-height: 1.65; color: var(--text);
+      white-space: pre-wrap;
+    }
+    .modal-meta-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .modal-meta-item {}
+    .modal-meta-key { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    .modal-meta-val { font-size: 13px; font-weight: 500; }
+    .modal-divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+    .blocker-box {
+      background: rgba(255,107,107,.08);
+      border: 1px solid rgba(255,107,107,.25);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: #ff9a9a;
+      line-height: 1.5;
+    }
+    .progress-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    /* ── Hidden row ── */
+    .hidden { display: none !important; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ── Divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    /* ── Table wrapper ── */
+    .table-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo">FU</div>
+    <div>
+      <div class="header-title">Autobot Project Tracker</div>
+      <div class="header-sub">Final Upgrade AI · Lin (autobot)</div>
+    </div>
+  </div>
+  <div class="updated-badge">Last synced <span id="sync-date">—</span></div>
+</header>
+
+<div class="container">
+
+  <!-- Stats -->
+  <div class="stats-row" id="stats-row"></div>
+
+  <!-- Projects -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Projects</div>
+      <div class="section-count" id="proj-count"></div>
+    </div>
+    <div class="filters">
+      <div class="filter-group">
+        <span class="filter-label">Status</span>
+        <select id="proj-status-filter" onchange="filterProjects()">
+          <option value="">All</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Quarter</span>
+        <select id="proj-quarter-filter" onchange="filterProjects()">
+          <option value="">All</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Priority</span>
+        <select id="proj-priority-filter" onchange="filterProjects()">
+          <option value="">All</option>
+        </select>
+      </div>
+      <button class="filter-reset" onclick="resetProjectFilters()">Reset</button>
+    </div>
+    <div class="projects-grid" id="projects-grid"></div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- Deliverables -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Deliverables</div>
+      <div class="section-count" id="del-count"></div>
+    </div>
+    <div class="filters">
+      <div class="filter-group">
+        <span class="filter-label">Status</span>
+        <select id="del-status-filter" onchange="filterDeliverables()">
+          <option value="">All</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Project</span>
+        <select id="del-project-filter" onchange="filterDeliverables()">
+          <option value="">All</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Priority</span>
+        <select id="del-priority-filter" onchange="filterDeliverables()">
+          <option value="">All</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Impact</span>
+        <select id="del-impact-filter" onchange="filterDeliverables()">
+          <option value="">All</option>
+        </select>
+      </div>
+      <button class="filter-reset" onclick="resetDelFilters()">Reset</button>
+    </div>
+    <div class="table-wrapper">
+      <table class="del-table">
+        <thead>
+          <tr>
+            <th>Deliverable</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Due Date</th>
+            <th>Owner</th>
+            <th>Impact Area</th>
+          </tr>
+        </thead>
+        <tbody id="del-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const DATA = {
+  "projects": [
+    {"Project ID":"PRJ-001","Project Name":"Socials Automation","Quarter":"Q2 2026","Objective / Description":"Identify workflows that can be AI-empowered and streamlined through AI tools or building out new features in the Content Studio AICRM.","Owner":"Lin","Stakeholders":"Dominique","Impact Area":"Ops","Status":"In Progress","Priority":"High","Target Completion Date":"Jul 03, 2026","Notes":null,"RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Project ID":"PRJ-002","Project Name":"Keynotes Ops","Quarter":"Q2 2026","Objective / Description":"Upgrade how we develop and present Keynotes using microsites.","Owner":"Dominique","Stakeholders":"Dominique","Impact Area":"Events","Status":"In Progress","Priority":"High","Target Completion Date":"Jun 30, 2026","Notes":null,"RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Project ID":"PRJ-003","Project Name":"F.U. Socials Campaign","Quarter":"Recurring","Objective / Description":"Create Astrocat engaging animated pop-up video holiday posts for LinkedIn distribution for KVP, Dom, Final Upgrade Company page - meant for brand awareness, brand presence on LinkedIn.","Owner":"Lin","Stakeholders":"Dominique, KVP, Final Upgrade Company","Impact Area":"SocMed Marketing","Status":"In Progress","Priority":"Medium","Target Completion Date":null,"Notes":"Holiday Campaign Tracker","RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Project ID":"PRJ-004","Project Name":"Tech Ops Tasks","Quarter":"Recurring","Objective / Description":"Catch-all project for one-off admin and requested tasks that should not be forgotten.","Owner":"Lin","Stakeholders":"Final Upgrade AI","Impact Area":"Ops","Status":"In Progress","Priority":"Medium","Target Completion Date":"N/A","Notes":null,"RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Project ID":"PRJ-005","Project Name":"Rockstar Card Receipt","Quarter":"Q3 2026","Objective / Description":"Re-route, fix, and rebuild Rockstar card receipt automation (v2) for better error visibility and reduced finance team dependency.","Owner":"Lin","Stakeholders":"KVP, Yuliya, Queenie","Impact Area":"Ops","Status":"In Progress","Priority":"High","Target Completion Date":"TBD","Notes":null,"RefLink 1":null,"RefLink 2":null,"RefLink 3":null}
+  ],
+  "deliverables": [
+    {"Deliverable ID":"DEL-002","Project Name":"Socials Automation","Deliverable Name":"Events Promo Caption Generator","Description":"Pull Dominique's event updates and auto-generate social captions to post before each event, targeting leads in the market she is attending.","Deliverable Type":"Tech Product","Priority":"High","Status":"In Progress","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":"Prioritized DEL-003 Keynote Engine Deliverable + DEL-015 Troubleshoot","Progress Notes":"Flow for scheduling what to prep, review and approve drafts, then copy-paste the finalized posts has been built. Logic for processing \"confirmed events\" only has been added, meaning unconfirmed or tentative events, do not get flagged. Refinements on caption quality in progress.\n\nNew timeline: \nJuly 13 - Tone of Voice + Writing Guidelines refinements\nJuly 14  - Full end-to-end testing\nJuly 15 - Rollout/showcase to team","Last Updated":"Jul 13, 2026","Impact Area":"Ops","RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-003","Project Name":"Keynotes Ops","Deliverable Name":"Improving UI/UX of the Online Keynote Generator","Description":"Build on top of Dominique's initial build, improving the flow and functionality of the system so that it is able to take in real inputs and produce product quality grade outputs.\n\nLin's priority: \"Make the Keynote system usable end-to-end.\"\n\n1. PPT ingestion — Ensure upload → parsing → basic slide structure works\n2. Slide rendering in Impress — Confirm slides display properly\n3. Core experience validation — Test at least one full flow","Deliverable Type":"Tech Product","Priority":"High","Status":"In Progress","Owner":"Dominique","Stakeholders":"Dominique","Due Date":"Jul 27, 2026","Dependency / Blocker":null,"Progress Notes":"New project timeline aligned with Jaisa:\n\nTarget event initial rollout: August 17\n\nWork is planned backward from this date:\nWeek of July 27 → Initial testing\nWeek of Aug 3 → Refinement\nWeek of Aug 10 → Final testing / finalization\n\nWeek of July 13: To discuss with Dom — explore engaging Creative Upgrade (CU) team to develop video visuals/backgrounds for keynote engine, after Dom's in-person sessions with Bella.","Last Updated":"Jul 13, 2026","Impact Area":"Events","RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-004","Project Name":"F.U. Socials Campaign","Deliverable Name":"Global Holiday Campaign","Description":"Create Astrocat engaging animated pop-up video holiday posts for LinkedIn distribution for KVP, Dom, Final Upgrade Company page - meant for brand awareness, brand presence on LinkedIn.","Deliverable Type":"Video","Priority":"Medium","Status":"In Progress","Owner":"Lin","Stakeholders":"Dominique, KVP, Final Upgrade Company","Due Date":"Recurring","Dependency / Blocker":null,"Progress Notes":"Next Event = National Day in Singapore on AUG 9","Last Updated":"Jul 13, 2026","Impact Area":"SocMed Marketing","RefLink 1":"Holiday Campaign Tracker","RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-011","Project Name":"Tech Ops Tasks","Deliverable Name":"Consolidate Read.ai Accounts & Build Internal Recording System","Description":"Read.ai enterprise renewal hits July 25 — 6 accounts currently at ~$1,700. Goal is to reduce to 2 accounts: one shared account for general team use, and one private account for Dominique and KVP for confidential meetings.","Deliverable Type":"Tech Product","Priority":"High","Status":"On Hold","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":"**Dom to take on - Define email + Read AI architecture with Kay before onboarding Lin on the project\n\n**Dom to drive centralized \"wiki / brain\" system for ingestion + distribution of info (ex. meeting minutes; reduce dependency on Read.ai)","Last Updated":"Jul 13, 2026","Impact Area":"Ops","RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-012","Project Name":"Tech Ops Tasks","Deliverable Name":"Robot + Astrocat Claude Access Distribution","Description":"Document how Robot and Astrocat Claude account access is distributed across the team. Both accounts use the \"Continue with Email\" magic link flow — no password option is available.","Deliverable Type":"Document","Priority":"High","Status":"Completed","Owner":"Lin","Stakeholders":"Dominique, Jaisa, Masooma","Due Date":"Jul 02, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":"Jul 06, 2026","Impact Area":"Ops","RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-005","Project Name":"Tech Ops Tasks","Deliverable Name":"Obtain Railway DPA","Description":"Contact Railway's support or legal team to request a formal Data Processing Agreement (DPA). Confirm receipt and store the signed document in the designated compliance folder.","Deliverable Type":"Document","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops","RefLink 1":"DPA Instructions","RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-006","Project Name":"Tech Ops Tasks","Deliverable Name":"Verify Anthropic DPF Certification & Review Data Processing Terms","Description":"Confirm that Anthropic holds a valid Data Privacy Framework (DPF) certification. Review their data processing terms to ensure alignment with EU/US data transfer requirements.","Deliverable Type":"Document","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops","RefLink 1":"DPA Instructions","RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-007","Project Name":"Tech Ops Tasks","Deliverable Name":"Verify Cloudinary DPF Certification & Obtain DPA","Description":"Verify Cloudinary's current Data Privacy Framework (DPF) certification status. Request and obtain their Data Processing Agreement (DPA).","Deliverable Type":"Document","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops","RefLink 1":"DPA Instructions","RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-008","Project Name":"Tech Ops Tasks","Deliverable Name":"Confirm Dripify Server Location & Obtain DPA","Description":"Highest risk compliance gap. Confirm the physical server location(s) used by Dripify. Obtain their Data Processing Agreement (DPA) and assess whether data residency meets GDPR requirements.","Deliverable Type":"Document","Priority":"High","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops","RefLink 1":"DPA Instructions","RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-009","Project Name":"Tech Ops Tasks","Deliverable Name":"Verify Railway Backup Storage Stays Within EU","Description":"Confirm that Railway's backup storage infrastructure is physically located within the EU. Contact Railway support or review their infrastructure documentation.","Deliverable Type":"Document","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops","RefLink 1":"DPA Instructions","RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-010","Project Name":"Tech Ops Tasks","Deliverable Name":"Review Read.ai DPA & Assess Transcript Retention Policy","Description":"Review Read.ai's Data Processing Agreement (DPA) in full. Assess their transcript retention policy against data minimisation principles.","Deliverable Type":"Document","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops","RefLink 1":"DPA Instructions","RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-001","Project Name":"Socials Automation","Deliverable Name":"Social Listening Tool","Description":"Build out a social listening tool within the AI CRM Content Studio that tracks authored posts by Dominique on LinkedIn and parses engagement, likes, and leads from that data.","Deliverable Type":"Tech Product","Priority":"Medium","Status":"On Hold","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 03, 2026","Dependency / Blocker":"Phantom Buster Integration; Slack Block Kit bot message (invalid_blocks_format) — CRM bot send rejected when pushing table-format messages via chat.postMessage; webhook fallback works but delivers plain text only","Progress Notes":"Phase 1 of flowing authored posts into the Content Studio is complete. Phase 2 (parsing engagement, likes, and leads) is in progress. Blocker active as of 2026-06-26: Slack bot message delivery failing with invalid_blocks_format.","Last Updated":"Jun 30, 2026","Impact Area":"Ops","RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-013","Project Name":"Rockstar Card Receipt","Deliverable Name":"V2 Rockstar Card Receipt Automation","Description":"Rebuild receipt tracking automation re-routed back to Autobot for better error visibility. Includes SOP / rules for rollout of the new receipt tracking process.","Deliverable Type":"Tech Product","Priority":"High","Status":"In Progress","Owner":"Lin","Stakeholders":"KVP, Yuliya, Queenie","Due Date":"TBD","Dependency / Blocker":null,"Progress Notes":"Call with Yuliya + Queenie scheduled July 14. Timing for v2 rollout + build timeline to be discussed in call.","Last Updated":"Jul 13, 2026","Impact Area":"Ops","RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-014","Project Name":"Tech Ops Tasks","Deliverable Name":"Julius AI Code Expiry Extension","Description":"Follow up on Julius institutional code extension — code expiring July 14. Extension request submitted; awaiting response. Needed to continue featuring Julius on the events microsite.","Deliverable Type":"Other","Priority":"High","Status":"In Progress","Owner":"Lin","Stakeholders":"Dominique, Jaisa","Due Date":"Jul 14, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":"Jul 13, 2026","Impact Area":"Events","RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-015","Project Name":"Tech Ops Tasks","Deliverable Name":"Troubleshoot PR #4918 — crm-build-alerts Missing Alert","Description":"Investigate why PR #4918 (Post Workshop Materials build by Jaisa) did not surface in crm-build-alerts channel. Identify and fix alert configuration issue.","Deliverable Type":"Tech Product","Priority":"High","Status":"In Progress","Owner":"Lin","Stakeholders":"Jaisa","Due Date":"Jul 13, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":"Jul 13, 2026","Impact Area":"Ops","RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-016","Project Name":"Socials Automation","Deliverable Name":"Wiki-based Social Content Pipeline","Description":"Build the wiki-based social content pipeline tab in Content Studio (Content Pipeline > \"From the Wiki\"). Pulls from the company wiki/brain to auto-generate social content for distribution.","Deliverable Type":"Tech Product","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"TBD","Dependency / Blocker":null,"Progress Notes":"**dependent on Dom's wiki build progress, on when it can be hooked up to the ai crm","Last Updated":"Jul 13, 2026","Impact Area":"Ops","RefLink 1":null,"RefLink 2":null,"RefLink 3":null},
+    {"Deliverable ID":"DEL-017","Project Name":"Keynotes Ops","Deliverable Name":"CU Video Assets for Keynote Engine","Description":"Engage the Creative Upgrade (CU) team to develop video visuals and backgrounds for the keynote engine.","Deliverable Type":"Video","Priority":"Medium","Status":"Not Started","Owner":"Dominique","Stakeholders":"Dominique, Bella","Due Date":"TBD","Dependency / Blocker":null,"Progress Notes":"To be scoped after Dom's in-person sessions with Bella.","Last Updated":"Jul 13, 2026","Impact Area":"Events","RefLink 1":null,"RefLink 2":null,"RefLink 3":null}
+  ]
+};
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function statusClass(s) {
+  if (!s) return 'not-started';
+  return s.toLowerCase().replace(/\s+/g, '-');
+}
+function priorityClass(p) {
+  if (!p) return '';
+  return p.toLowerCase();
+}
+function badge(status) {
+  return `<span class="badge ${statusClass(status)}">${status || '—'}</span>`;
+}
+function prio(p) {
+  return `<span class="priority ${priorityClass(p)}">${p || '—'}</span>`;
+}
+
+// ── STATS ─────────────────────────────────────────────────────────────────────
+function renderStats() {
+  const d = DATA.deliverables;
+  const inProgress = d.filter(x => x.Status === 'In Progress').length;
+  const completed  = d.filter(x => x.Status === 'Completed').length;
+  const onHold     = d.filter(x => x.Status === 'On Hold').length;
+  const notStarted = d.filter(x => x.Status === 'Not Started').length;
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-card"><div class="stat-label">In Progress</div><div class="stat-value blue">${inProgress}</div></div>
+    <div class="stat-card"><div class="stat-label">Not Started</div><div class="stat-value purple">${notStarted}</div></div>
+    <div class="stat-card"><div class="stat-label">On Hold</div><div class="stat-value yellow">${onHold}</div></div>
+    <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value green">${completed}</div></div>
+  `;
+}
+
+// ── PROJECTS ─────────────────────────────────────────────────────────────────
+function renderProjects(list) {
+  const grid = document.getElementById('projects-grid');
+  document.getElementById('proj-count').textContent = list.length;
+  if (!list.length) { grid.innerHTML = '<div class="empty-state">No projects match your filters.</div>'; return; }
+  grid.innerHTML = list.map(p => `
+    <div class="project-card" onclick="openProjectModal(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+      <div class="project-card-top">
+        <div>
+          <div class="project-id">${p['Project ID']}</div>
+          <div class="project-name">${p['Project Name']}</div>
+        </div>
+        ${badge(p.Status)}
+      </div>
+      <div class="project-desc">${p['Objective / Description'] || ''}</div>
+      <div class="project-meta">
+        ${prio(p.Priority)}
+        <span class="tag">📅 ${p.Quarter || '—'}</span>
+        <span class="tag">👤 ${p.Owner || '—'}</span>
+        <span class="tag">🏷 ${p['Impact Area'] || '—'}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterProjects() {
+  const s = document.getElementById('proj-status-filter').value;
+  const q = document.getElementById('proj-quarter-filter').value;
+  const p = document.getElementById('proj-priority-filter').value;
+  const filtered = DATA.projects.filter(x =>
+    (!s || x.Status === s) &&
+    (!q || x.Quarter === q) &&
+    (!p || x.Priority === p)
+  );
+  renderProjects(filtered);
+}
+
+function resetProjectFilters() {
+  ['proj-status-filter','proj-quarter-filter','proj-priority-filter'].forEach(id => document.getElementById(id).value = '');
+  renderProjects(DATA.projects);
+}
+
+function populateProjectFilters() {
+  const statuses  = [...new Set(DATA.projects.map(p => p.Status).filter(Boolean))];
+  const quarters  = [...new Set(DATA.projects.map(p => p.Quarter).filter(Boolean))];
+  const priorities = [...new Set(DATA.projects.map(p => p.Priority).filter(Boolean))];
+  populateSelect('proj-status-filter', statuses);
+  populateSelect('proj-quarter-filter', quarters);
+  populateSelect('proj-priority-filter', priorities);
+}
+
+// ── DELIVERABLES ─────────────────────────────────────────────────────────────
+function renderDeliverables(list) {
+  const tbody = document.getElementById('del-tbody');
+  document.getElementById('del-count').textContent = list.length;
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No deliverables match your filters.</td></tr>'; return; }
+  tbody.innerHTML = list.map(d => `
+    <tr onclick="openDelModal(${JSON.stringify(d).replace(/"/g,'&quot;')})">
+      <td>
+        <div class="del-id">${d['Deliverable ID']}</div>
+        <div class="del-name">${d['Deliverable Name']}</div>
+        <div class="del-project">${d['Project Name']}</div>
+      </td>
+      <td>${badge(d.Status)}</td>
+      <td>${prio(d.Priority)}</td>
+      <td style="white-space:nowrap;color:var(--muted);font-size:12px">${d['Due Date'] || '—'}</td>
+      <td style="font-size:12px">${d.Owner || '—'}</td>
+      <td style="font-size:12px;color:var(--muted)">${d['Impact Area'] || '—'}</td>
+    </tr>
+  `).join('');
+}
+
+function filterDeliverables() {
+  const s  = document.getElementById('del-status-filter').value;
+  const pr = document.getElementById('del-project-filter').value;
+  const p  = document.getElementById('del-priority-filter').value;
+  const ia = document.getElementById('del-impact-filter').value;
+  const filtered = DATA.deliverables.filter(x =>
+    (!s  || x.Status === s) &&
+    (!pr || x['Project Name'] === pr) &&
+    (!p  || x.Priority === p) &&
+    (!ia || x['Impact Area'] === ia)
+  );
+  renderDeliverables(filtered);
+}
+
+function resetDelFilters() {
+  ['del-status-filter','del-project-filter','del-priority-filter','del-impact-filter'].forEach(id => document.getElementById(id).value = '');
+  renderDeliverables(DATA.deliverables);
+}
+
+function populateDelFilters() {
+  const d = DATA.deliverables;
+  populateSelect('del-status-filter',  [...new Set(d.map(x=>x.Status).filter(Boolean))]);
+  populateSelect('del-project-filter', [...new Set(d.map(x=>x['Project Name']).filter(Boolean))].sort());
+  populateSelect('del-priority-filter',[...new Set(d.map(x=>x.Priority).filter(Boolean))]);
+  populateSelect('del-impact-filter',  [...new Set(d.map(x=>x['Impact Area']).filter(Boolean))].sort());
+}
+
+// ── MODAL ────────────────────────────────────────────────────────────────────
+function openProjectModal(p) {
+  const refs = [p['RefLink 1'],p['RefLink 2'],p['RefLink 3']].filter(Boolean);
+  const delivs = DATA.deliverables.filter(d => d['Project Name'] === p['Project Name']);
+  document.getElementById('modal-content').innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-id">${p['Project ID']}</div>
+    <div class="modal-title">${p['Project Name']}</div>
+    <div class="modal-badges">${badge(p.Status)}${prio(p.Priority)}<span class="tag">📅 ${p.Quarter||'—'}</span><span class="tag">🏷 ${p['Impact Area']||'—'}</span></div>
+    <div class="modal-meta-grid">
+      <div class="modal-meta-item"><div class="modal-meta-key">Owner</div><div class="modal-meta-val">${p.Owner||'—'}</div></div>
+      <div class="modal-meta-item"><div class="modal-meta-key">Stakeholders</div><div class="modal-meta-val">${p.Stakeholders||'—'}</div></div>
+      <div class="modal-meta-item"><div class="modal-meta-key">Target Completion</div><div class="modal-meta-val">${p['Target Completion Date']||'—'}</div></div>
+      <div class="modal-meta-item"><div class="modal-meta-key">Deliverables</div><div class="modal-meta-val">${delivs.length}</div></div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Objective</div>
+      <div class="modal-section-content">${p['Objective / Description']||'—'}</div>
+    </div>
+    ${p.Notes ? `<div class="modal-section"><div class="modal-section-label">Notes</div><div class="progress-box">${p.Notes}</div></div>` : ''}
+    ${refs.length ? `<div class="modal-section"><div class="modal-section-label">Reference Links</div><div class="modal-section-content">${refs.join(' · ')}</div></div>` : ''}
+    ${delivs.length ? `
+      <hr class="modal-divider"/>
+      <div class="modal-section-label">Deliverables (${delivs.length})</div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+        ${delivs.map(d=>`<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center">
+          <div><div style="font-size:10px;color:var(--muted);font-family:monospace">${d['Deliverable ID']}</div><div style="font-size:13px;font-weight:600">${d['Deliverable Name']}</div></div>
+          <div style="display:flex;gap:6px;align-items:center">${badge(d.Status)}${prio(d.Priority)}</div>
+        </div>`).join('')}
+      </div>` : ''}
+  `;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function openDelModal(d) {
+  const refs = [d['RefLink 1'],d['RefLink 2'],d['RefLink 3']].filter(Boolean);
+  document.getElementById('modal-content').innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-id">${d['Deliverable ID']} · ${d['Project Name']}</div>
+    <div class="modal-title">${d['Deliverable Name']}</div>
+    <div class="modal-badges">${badge(d.Status)}${prio(d.Priority)}<span class="tag">${d['Deliverable Type']||''}</span><span class="tag">🏷 ${d['Impact Area']||'—'}</span></div>
+    <div class="modal-meta-grid">
+      <div class="modal-meta-item"><div class="modal-meta-key">Owner</div><div class="modal-meta-val">${d.Owner||'—'}</div></div>
+      <div class="modal-meta-item"><div class="modal-meta-key">Stakeholders</div><div class="modal-meta-val">${d.Stakeholders||'—'}</div></div>
+      <div class="modal-meta-item"><div class="modal-meta-key">Due Date</div><div class="modal-meta-val">${d['Due Date']||'—'}</div></div>
+      <div class="modal-meta-item"><div class="modal-meta-key">Last Updated</div><div class="modal-meta-val">${d['Last Updated']||'—'}</div></div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Description</div>
+      <div class="modal-section-content">${d.Description||'—'}</div>
+    </div>
+    ${d['Dependency / Blocker'] ? `<div class="modal-section"><div class="modal-section-label">⚠️ Dependency / Blocker</div><div class="blocker-box">${d['Dependency / Blocker']}</div></div>` : ''}
+    ${d['Progress Notes'] ? `<div class="modal-section"><div class="modal-section-label">Progress Notes</div><div class="progress-box">${d['Progress Notes']}</div></div>` : ''}
+    ${refs.length ? `<div class="modal-section"><div class="modal-section-label">Reference Links</div><div class="modal-section-content">${refs.join(' · ')}</div></div>` : ''}
+  `;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function populateSelect(id, values) {
+  const sel = document.getElementById(id);
+  values.forEach(v => {
+    const o = document.createElement('option');
+    o.value = v; o.textContent = v;
+    sel.appendChild(o);
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('sync-date').textContent = 'Jul 13, 2026';
+  renderStats();
+  populateProjectFilters();
+  renderProjects(DATA.projects);
+  populateDelFilters();
+  renderDeliverables(DATA.deliverables);
+});
+</script>
+</body>
+</html>
