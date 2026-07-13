@@ -462,156 +462,627 @@
 </div>
 
 <script>
-// ── DATA ─────────────────────────────────────────────────────────────────────
 const SYNC_DATE = 'Jul 13, 2026';
 const SYNC_TS   = new Date('2026-07-13').getTime();
 
 const DATA = {
   "projects": [
-    {"Project ID":"PRJ-001","Project Name":"Socials Automation","Quarter":"Q2 2026","Objective / Description":"Identify workflows that can be AI-empowered and streamlined through AI tools or building out new features in the Content Studio AICRM.","Owner":"Lin","Stakeholders":"Dominique","Impact Area":"Ops","Status":"In Progress","Priority":"High","Target Completion Date":"Jul 03, 2026","Notes":null},
-    {"Project ID":"PRJ-002","Project Name":"Keynotes Ops","Quarter":"Q2 2026","Objective / Description":"Upgrade how we develop and present Keynotes using microsites.","Owner":"Dominique","Stakeholders":"Dominique","Impact Area":"Events","Status":"In Progress","Priority":"High","Target Completion Date":"Jun 30, 2026","Notes":null},
-    {"Project ID":"PRJ-003","Project Name":"F.U. Socials Campaign","Quarter":"Recurring","Objective / Description":"Create Astrocat engaging animated pop-up video holiday posts for LinkedIn distribution for KVP, Dom, Final Upgrade Company page - meant for brand awareness, brand presence on LinkedIn.","Owner":"Lin","Stakeholders":"Dominique, KVP, Final Upgrade Company","Impact Area":"SocMed Marketing","Status":"In Progress","Priority":"Medium","Target Completion Date":null,"Notes":"Holiday Campaign Tracker"},
-    {"Project ID":"PRJ-004","Project Name":"Tech Ops Tasks","Quarter":"Recurring","Objective / Description":"Catch-all project for one-off admin and requested tasks that should not be forgotten.","Owner":"Lin","Stakeholders":"Final Upgrade AI","Impact Area":"Ops","Status":"In Progress","Priority":"Medium","Target Completion Date":"N/A","Notes":null},
-    {"Project ID":"PRJ-005","Project Name":"Rockstar Card Receipt","Quarter":"Q3 2026","Objective / Description":"Re-route, fix, and rebuild Rockstar card receipt automation (v2) for better error visibility and reduced finance team dependency.","Owner":"Lin","Stakeholders":"KVP, Yuliya, Queenie","Impact Area":"Ops","Status":"In Progress","Priority":"High","Target Completion Date":"TBD","Notes":null}
+    {
+      "Project ID": "PRJ-001",
+      "Project Name": "Socials Automation",
+      "Quarter": "Q2 2026",
+      "Objective / Description": "Identify workflows that can be AI-empowered and streamlined through AI tools or building out new features in the Content Studio AICRM.",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Impact Area": "Ops",
+      "Status": "In Progress",
+      "Priority": "High",
+      "Target Completion Date": "Jul 03, 2026",
+      "Notes": null,
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Project ID": "PRJ-002",
+      "Project Name": "Keynotes Ops",
+      "Quarter": "Q2 2026",
+      "Objective / Description": "Upgrade how we develop and present Keynotes using microsites.",
+      "Owner": "Dominique",
+      "Stakeholders": "Dominique",
+      "Impact Area": "Events",
+      "Status": "In Progress",
+      "Priority": "High",
+      "Target Completion Date": "Jun 30, 2026",
+      "Notes": null,
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Project ID": "PRJ-003",
+      "Project Name": "F.U. Socials Campaign",
+      "Quarter": "Recurring",
+      "Objective / Description": "Create Astro Cat engaging animated pop-up video holiday posts for LinkedIn distribution for KVP, Dom, Final Upgrade Company page - meant for brand awareness, brand presence on LinkedIn.",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique, KVP, Final Upgrade Company",
+      "Impact Area": "SocMed Marketing",
+      "Status": "In Progress",
+      "Priority": "Medium",
+      "Target Completion Date": null,
+      "Notes": "Holiday Campaign Tracker",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Project ID": "PRJ-004",
+      "Project Name": "Tech Ops Tasks",
+      "Quarter": "Recurring",
+      "Objective / Description": "Catch-all project for one-off admin and requested tasks that should not be forgotten.",
+      "Owner": "Lin",
+      "Stakeholders": "Final Upgrade AI",
+      "Impact Area": "Ops",
+      "Status": "In Progress",
+      "Priority": "Medium",
+      "Target Completion Date": "N/A",
+      "Notes": null,
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Project ID": "PRJ-005",
+      "Project Name": "Rockstar Card Receipt",
+      "Quarter": "Q3 2026",
+      "Objective / Description": "Re-route, fix, and rebuild Rockstar card receipt automation (v2) for better error visibility and reduced finance team dependency.",
+      "Owner": "Lin",
+      "Stakeholders": "KVP, Yuliya, Queenie",
+      "Impact Area": "Ops",
+      "Status": "In Progress",
+      "Priority": "High",
+      "Target Completion Date": "TBD",
+      "Notes": null,
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    }
   ],
   "deliverables": [
-    {"Deliverable ID":"DEL-002","Project Name":"Socials Automation","Deliverable Name":"Events Promo Caption Generator","Description":"Pull Dominique's event updates and auto-generate social captions to post before each event, targeting leads in the market she is attending.","Deliverable Type":"Tech Product","Priority":"High","Status":"In Progress","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":"Prioritized DEL-003 Keynote Engine Deliverable + DEL-015 Troubleshoot","Progress Notes":"Flow for scheduling what to prep, review and approve drafts, then copy-paste the finalized posts has been built. Logic for processing \"confirmed events\" only has been added, meaning unconfirmed or tentative events, do not get flagged. Refinements on caption quality in progress.\n\nNew timeline: \nJuly 13 - Tone of Voice + Writing Guidelines refinements\nJuly 14  - Full end-to-end testing\nJuly 15 - Rollout/showcase to team","Last Updated":"Jul 13, 2026","Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-003","Project Name":"Keynotes Ops","Deliverable Name":"Improving UI/UX of the Online Keynote Generator","Description":"Build on top of Dominique's initial build, improving the flow and functionality of the system so that it is able to take in real inputs and produce product quality grade outputs.\n\nLin's priority: \"Make the Keynote system usable end-to-end.\"\n\n1. PPT ingestion — Ensure upload → parsing → basic slide structure works\n2. Slide rendering in Impress — Confirm slides display properly\n3. Core experience validation — Test at least one full flow","Deliverable Type":"Tech Product","Priority":"High","Status":"In Progress","Owner":"Dominique","Stakeholders":"Dominique","Due Date":"Jul 27, 2026","Dependency / Blocker":null,"Progress Notes":"New project timeline aligned with Jaisa:\n\nTarget event initial rollout: August 17\n\nWork is planned backward from this date:\nWeek of July 27 → Initial testing\nWeek of Aug 3 → Refinement\nWeek of Aug 10 → Final testing / finalization\n\nWeek of July 13: To discuss with Dom — explore engaging Creative Upgrade (CU) team to develop video visuals/backgrounds for keynote engine, after Dom's in-person sessions with Bella.","Last Updated":"Jul 13, 2026","Impact Area":"Events"},
-    {"Deliverable ID":"DEL-004","Project Name":"F.U. Socials Campaign","Deliverable Name":"Global Holiday Campaign","Description":"Create Astrocat engaging animated pop-up video holiday posts for LinkedIn distribution for KVP, Dom, Final Upgrade Company page - meant for brand awareness, brand presence on LinkedIn.","Deliverable Type":"Video","Priority":"Medium","Status":"In Progress","Owner":"Lin","Stakeholders":"Dominique, KVP, Final Upgrade Company","Due Date":"Recurring","Dependency / Blocker":null,"Progress Notes":"Next Event = National Day in Singapore on AUG 9","Last Updated":"Jul 13, 2026","Impact Area":"SocMed Marketing"},
-    {"Deliverable ID":"DEL-011","Project Name":"Tech Ops Tasks","Deliverable Name":"Consolidate Read.ai Accounts & Build Internal Recording System","Description":"Read.ai enterprise renewal hits July 25 — 6 accounts currently at ~$1,700. Goal is to reduce to 2 accounts: one shared account for general team use, and one private account for Dominique and KVP for confidential meetings.","Deliverable Type":"Tech Product","Priority":"High","Status":"On Hold","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":"**Dom to take on - Define email + Read AI architecture with Kay before onboarding Lin on the project\n\n**Dom to drive centralized \"wiki / brain\" system for ingestion + distribution of info (ex. meeting minutes; reduce dependency on Read.ai)","Last Updated":"Jul 13, 2026","Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-012","Project Name":"Tech Ops Tasks","Deliverable Name":"Robot + Astrocat Claude Access Distribution","Description":"Document how Robot and Astrocat Claude account access is distributed across the team. Both accounts use the \"Continue with Email\" magic link flow — no password option is available.","Deliverable Type":"Document","Priority":"High","Status":"Completed","Owner":"Lin","Stakeholders":"Dominique, Jaisa, Masooma","Due Date":"Jul 02, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":"Jul 06, 2026","Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-005","Project Name":"Tech Ops Tasks","Deliverable Name":"Obtain Railway DPA","Description":"Contact Railway's support or legal team to request a formal Data Processing Agreement (DPA). Confirm receipt and store the signed document in the designated compliance folder.","Deliverable Type":"Document","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-006","Project Name":"Tech Ops Tasks","Deliverable Name":"Verify Anthropic DPF Certification & Review Data Processing Terms","Description":"Confirm that Anthropic holds a valid Data Privacy Framework (DPF) certification. Review their data processing terms to ensure alignment with EU/US data transfer requirements.","Deliverable Type":"Document","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-007","Project Name":"Tech Ops Tasks","Deliverable Name":"Verify Cloudinary DPF Certification & Obtain DPA","Description":"Verify Cloudinary's current Data Privacy Framework (DPF) certification status. Request and obtain their Data Processing Agreement (DPA).","Deliverable Type":"Document","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-008","Project Name":"Tech Ops Tasks","Deliverable Name":"Confirm Dripify Server Location & Obtain DPA","Description":"Highest risk compliance gap. Confirm the physical server location(s) used by Dripify. Obtain their Data Processing Agreement (DPA) and assess whether data residency meets GDPR requirements.","Deliverable Type":"Document","Priority":"High","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-009","Project Name":"Tech Ops Tasks","Deliverable Name":"Verify Railway Backup Storage Stays Within EU","Description":"Confirm that Railway's backup storage infrastructure is physically located within the EU. Contact Railway support or review their infrastructure documentation.","Deliverable Type":"Document","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-010","Project Name":"Tech Ops Tasks","Deliverable Name":"Review Read.ai DPA & Assess Transcript Retention Policy","Description":"Review Read.ai's Data Processing Agreement (DPA) in full. Assess their transcript retention policy against data minimisation principles.","Deliverable Type":"Document","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 15, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":null,"Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-001","Project Name":"Socials Automation","Deliverable Name":"Social Listening Tool","Description":"Build out a social listening tool within the AI CRM Content Studio that tracks authored posts by Dominique on LinkedIn and parses engagement, likes, and leads from that data.","Deliverable Type":"Tech Product","Priority":"Medium","Status":"On Hold","Owner":"Lin","Stakeholders":"Dominique","Due Date":"Jul 03, 2026","Dependency / Blocker":"Phantom Buster Integration; Slack Block Kit bot message (invalid_blocks_format) — CRM bot send rejected when pushing table-format messages via chat.postMessage; webhook fallback works but delivers plain text only","Progress Notes":"Phase 1 of flowing authored posts into the Content Studio is complete. Phase 2 (parsing engagement, likes, and leads) is in progress. Blocker active as of 2026-06-26: Slack bot message delivery failing with invalid_blocks_format.","Last Updated":"Jun 30, 2026","Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-013","Project Name":"Rockstar Card Receipt","Deliverable Name":"V2 Rockstar Card Receipt Automation","Description":"Rebuild receipt tracking automation re-routed back to Autobot for better error visibility. Includes SOP / rules for iollout of the new receipt tracking process.","Deliverable Type":"Tech Product","Priority":"High","Status":"In Progress","Owner":"Lin","Stakeholders":"KVP, Yuliya, Queenie","Due Date":"TBD","Dependency / Blocker":null,"Progress Notes":"Call with Yuliya + Queenie scheduled July 14. Timing for v2 rollout + build timeline to be discussed in call.","Last Updated":"Jul 13, 2026","Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-014","Project Name":"Tech Ops Tasks","Deliverable Name":"Julius AI Code Expiry Extension","Description":"Follow up on Julius institutional code extension — code expiring July 14. Extension request submitted; awaiting response. Needed to continue featuring Julius on the events microsite.","Deliverable Type":"Other","Priority":"High","Status":"In Progress","Owner":"Lin","Stakeholders":"Dominique, Jaisa","Due Date":"Jul 14, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":"Jul 13, 2026","Impact Area":"Events"},
-    {"Deliverable ID":"DEL-015","Project Name":"Tech Ops Tasks","Deliverable Name":"Troubleshoot PR #4918 — crm-build-alerts Missing Alert","Description":"Investigate why PR #4918 (Post Workshop Materials build by Jaisa) did not surface in crm-build-alerts channel. Identify and fix alert configuration issue.","Deliverable Type":"Tech Product","Priority":"High","Status":"In Progress","Owner":"Lin","Stakeholders":"Jaisa","Due Date":"Jul 13, 2026","Dependency / Blocker":null,"Progress Notes":null,"Last Updated":"Jul 13, 2026","Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-016","Project Name":"Socials Automation","Deliverable Name":"Wiki-based Social Content Pipeline","Description":"Build the wiki-based social content pipeline tab in Content Studio (Content Pipeline > \"From the Wiki\"). Pulls from the company wiki/brain to auto-generate social content for distribution.","Deliverable Type":"Tech Product","Priority":"Medium","Status":"Not Started","Owner":"Lin","Stakeholders":"Dominique","Due Date":"TBD","Dependency / Blocker":null,"Progress Notes":"**dependent on Dom's wiki build progress, on when it can be hooked up to the ai crm","Last Updated":"Jul 13, 2026","Impact Area":"Ops"},
-    {"Deliverable ID":"DEL-017","Project Name":"Keynotes Ops","Deliverable Name":"CU Video Assets for Keynote Engine","Description":"Engage the Creative Upgrade (CU) team to develop video visuals and backgrounds for the keynote engine.","Deliverable Type":"Video","Priority":"Medium","Status":"Not Started","Owner":"Dominique","Stakeholders":"Dominique, Bella","Due Date":"TBD","Dependency / Blocker":null,"Progress Notes":"To be scoped after Dom's in-person sessions with Bella.","Last Updated":"Jul 13, 2026","Impact Area":"Events"}
-  ]
+    {
+      "Deliverable ID": "DEL-002",
+      "Project Name": "Socials Automation",
+      "Deliverable Name": "Events Promo Caption Generator",
+      "Description": "Pull Dominique's event updates and auto-generate social captions to post before each event, targeting leads in the market she is attending.",
+      "Deliverable Type": "Tech Product",
+      "Priority": "High",
+      "Status": "In Progress",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Due Date": "Jul 15, 2026",
+      "Dependency / Blocker": "Prioritized DEL-003 Keynote Engine Deliverable + DEL-015 Troubleshoot",
+      "Progress Notes": "Flow for scheduling what to prep, review and approve drafts, then copy-paste the finalized posts has been built. Logic for processing \"confirmed events\" only has been added, meaning unconfirmed or tentative events, do not get flagged. Refinements on caption quality in progress.\n\nNew timeline: \nJuly 13 - Tone of Voice + Writing Guidelines refinements\nJuly 14  - Full end-to-end testin\nJuly 15 - Rollout/showcase to team",
+      "Last Updated": "Jul 13, 2015",
+      "Impact Area": "Ops",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-003",
+      "Project Name": "Keynotes Ops",
+      "Deliverable Name": "Improving UI/UX of the Online Keynote Generator",
+      "Description": "Build on top of Dominique's initial build, improving the flow and functionality of the system so that it is able to take in real inputs and produce product quality grade outputs.\n\n\nLin's priority is better framed as:\n\n“Make the Keynote system usable end-to-end.”\n\n1. PPT ingestion (yes, but scoped)\n       - Ensure upload → parsing → basic slide structure works\n       - Extract branding correctly\n       - Fix issue where only headers are being pulled\n2. Slide rendering in Impress\n       - Confirm slides actually display properly in the Impress format\n       - Ensure layout + flow feels coherent (not just technically working)\n3. Core experience validation\n       - Test at least one full flow:\n       - Upload deck → view slides → navigate presentation\n       - Light testing of: “Museum” / case study mode + One engagement feature (e.g. poll or QR join)",
+      "Deliverable Type": "Tech Product",
+      "Priority": "High",
+      "Status": "In Progress",
+      "Owner": "Dominique",
+      "Stakeholders": "Dominique",
+      "Due Date": "Jul 27, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": "New project timeline aligned with Jaisa:\n\nTarget event initial rollout: August 17\n\nWork is planned backward from this date:\n\nWeek of July 27 → Initial testing\nWeek of Aug 3 → Refinement\nWeek of Aug 10 → Final testing / finalization\n\nWeek of July 13: To discuss with Dom — explore engaging Creative Upgrade (CU) team to develop video visuals/backgrounds for keynote engine, after Dom's in-person sessions with Bella.",
+      "Last Updated": "Jul 13, 2026",
+      "Impact Area": "Events",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-004",
+      "Project Name": "F.U. Socials Campaign",
+      "Deliverable Name": "Global Holiday Campaign",
+      "Description": "Create Astrocat engaging animated pop-up video holiday posts for LinkedIn distribution for KVP, Dom, Final Upgrade Company page - meant for brand awareness, brand presence on LinkedIn.",
+      "Deliverable Type": "Video",
+      "Priority": "Medium",
+      "Status": "In Progress",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique, KVP, Final Upgrade Company",
+      "Due Date": "Recurring",
+      "Dependency / Blocker": null,
+      "Progress Notes": "Next Event = National Day in Singapore on AUG 9",
+      "Last Updated": "Jul 13, 2026",
+      "Impact Area": "SocMed Marketing",
+      "RefLink 1": "Holiday Campaign Tracker",
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-011",
+      "Project Name": "Tech Ops Tasks",
+      "Deliverable Name": "Consolidate Read.ai Accounts & Build Internal Recording System",
+      "Description": "Read.ai enterprise renewal hits July 25 — 6 accounts currently at ~$1,700. Goal is to reduce to 2 accounts: one shared account for general team use, and one private account for Dominique and KVP for confidential meetings. To make this work, build or configure an internal system to automatically record, ingest, and splice meeting content so the team is not dependent on individual accounts. Investigate calendar ownership structure — Dominique's calendar is currently on robot@finalupgrade.ai's \"My Calendar\" while the rest of Final Upgrade is under \"Other Calendars.\" Explore assigning robot a dedicated calendar per FU member to enable consistent recording coverage across the team.",
+      "Deliverable Type": "Tech Product",
+      "Priority": "High",
+      "Status": "On Hold",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Due Date": "Jul 15, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": "**Dom to take on - Define email + Read AI architecture with Kay before onboarding Lin on the project \n\n**Dom to drive centralized “wiki / brain” system for ingestion + distribution of info (ex. meeting minutes; reduce dependency on Read.ai)",
+      "Last Updated": "Jul 13, 2026",
+      "Impact Area": "Ops",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-012",
+      "Project Name": "Tech Ops Tasks",
+      "Deliverable Name": "Robot + Astrocat Claude Access Distribution",
+      "Description": "Document how Robot and Astrocat Claude account access is distributed across the team. Both accounts use the \"Continue with Email\" magic link flow — no password option is available. Anthropic sends a passwordless sign-in link to the email address; clicking it creates an authenticated session. Two options being evaluated: (1) Gmail-to-Slack automation: monitor robot inbox for Anthropic sign-in link emails and forward to a dedicated Slack channel (e.g. #admin-access-logins) — note anyone who sees the link can use it to access the account; (2) Simpler fallback: set up a Google robot email forwarding rule to forward Anthropic emails directly to Jaisa, Lin, Masooma, and Dominique.",
+      "Deliverable Type": "Document",
+      "Priority": "High",
+      "Status": "Completed",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique, Jaisa, Masooma",
+      "Due Date": "Jul 02, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": null,
+      "Last Updated": "Jul 06, 2026",
+      "Impact Area": "Ops",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-005",
+      "Project Name": "Tech Ops Tasks",
+      "Deliverable Name": "Obtain Railway DPA",
+      "Description": "Contact Railway's support or legal team to request a formal Data Processing Agreement (DPA). Confirm receipt and store the signed document in the designated compliance folder for Final Upgrade AI records.",
+      "Deliverable Type": "Document",
+      "Priority": "Medium",
+      "Status": "Not Started",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Due Date": "Jul 15, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": null,
+      "Last Updated": null,
+      "Impact Area": "Ops",
+      "RefLink 1": "DPA Instructions",
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-006",
+      "Project Name": "Tech Ops Tasks",
+      "Deliverable Name": "Verify Anthropic DPF Certification & Review Data Processing Terms",
+      "Description": "Confirm that Anthropic holds a valid Data Privacy Framework (DPF) certification. Review their data processing terms to ensure alignment with EU/US data transfer requirements. Document findings and file the relevant terms for compliance reference.",
+      "Deliverable Type": "Document",
+      "Priority": "Medium",
+      "Status": "Not Started",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Due Date": "Jul 15, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": null,
+      "Last Updated": null,
+      "Impact Area": "Ops",
+      "RefLink 1": "DPA Instructions",
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-007",
+      "Project Name": "Tech Ops Tasks",
+      "Deliverable Name": "Verify Cloudinary DPF Certification & Obtain DPA",
+      "Description": "Verify Cloudinary's current Data Privacy Framework (DPF) certification status. Request and obtain their Data Processing Agreement (DPA). Store the agreement in the Final Upgrade AI compliance folder.",
+      "Deliverable Type": "Document",
+      "Priority": "Medium",
+      "Status": "Not Started",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Due Date": "Jul 15, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": null,
+      "Last Updated": null,
+      "Impact Area": "Ops",
+      "RefLink 1": "DPA Instructions",
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-008",
+      "Project Name": "Tech Ops Tasks",
+      "Deliverable Name": "Confirm Dripify Server Location & Obtain DPA",
+      "Description": "Highest risk compliance gap. Confirm the physical server location(s) used by Dripify. Obtain their Data Processing Agreement (DPA) and assess whether data residency meets GDPR requirements. Escalate if servers are outside the EU without adequate safeguards.",
+      "Deliverable Type": "Document",
+      "Priority": "High",
+      "Status": "Not Started",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Due Date": "Jul 15, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": null,
+      "Last Updated": null,
+      "Impact Area": "Ops",
+      "RefLink 1": "DPA Instructions",
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-009",
+      "Project Name": "Tech Ops Tasks",
+      "Deliverable Name": "Verify Railway Backup Storage Stays Within EU",
+      "Description": "Confirm that Railway's backup storage infrastructure is physically located within the EU. Contact Railway support or review their infrastructure documentation. Record the confirmation in writing for GDPR/data residency compliance.",
+      "Deliverable Type": "Document",
+      "Priority": "Medium",
+      "Status": "Not Started",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Due Date": "Jul 15, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": null,
+      "Last Updated": null,
+      "Impact Area": "Ops",
+      "RefLink 1": "DPA Instructions",
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-010",
+      "Project Name": "Tech Ops Tasks",
+      "Deliverable Name": "Review Read.ai DPA & Assess Transcript Retention Policy",
+      "Description": "Review Read.ai's Data Processing Agreement (DPA) in full. Assess their transcript retention policy against data minimisation principles. Identify any settings to adjust or risks to flag, and document recommended changes or confirmations.",
+      "Deliverable Type": "Document",
+      "Priority": "Medium",
+      "Status": "Not Started",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Due Date": "Jul 15, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": null,
+      "Last Updated": null,
+      "Impact Area": "Ops",
+      "RefLink 1": "DPA Instructions",
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-001",
+      "Project Name": "Socials Automation",
+      "Deliverable Name": "Social Listening Tool",
+      "Description": "Build out a social listening tool within the AI CRM Content Studio that tracks authored posts by Dominique on LinkedIn and parses engagement, likes, and leads from that data.",
+      "Deliverable Type": "Tech Product",
+      "Priority": "Medium",
+      "Status": "On Hold",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Due Date": "Jul 03, 2026",
+      "Dependency / Blocker": "Phantom Buster Integration; Slack Block Kit bot message (invalid_blocks_format) — CRM bot send rejected when pushing table-format messages via chat.postMessage; webhook fallback works but delivers plain text only",
+      "Progress Notes": "Phase 1 of flowing authored posts into the Content Studio is complete. Phase 2 (parsing engagement, likes, and leads) is in progress. Blocker active as of 2026-06-26: Slack bot message delivery failing with invalid_blocks_format — CRM attempts to push structured Block Kit table summaries to Slack via chat.postMessage (bot token path) but Slack rejects the payload schema. Webhook fallback functional but delivers plain text only. Payload verified against Slack Block Kit docs and slack-go structs; root cause unresolved.",
+      "Last Updated": "Jun 30, 2026",
+      "Impact Area": "Ops",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-013",
+      "Project Name": "Rockstar Card Receipt",
+      "Deliverable Name": "V2 Rockstar Card Receipt Automation",
+      "Description": "Rebuild receipt tracking automation re-routed back to Autobot for better error visibility. Includes SOP / rules for rollout of the new receipt tracking process: talent receives a 1-week grace period to upload receipts after each Rockstar card transaction. After the grace period, outstanding submissions are flagged and card access is suspended until receipts are submitted.",
+      "Deliverable Type": "Tech Product",
+      "Priority": "High",
+      "Status": "In Progress",
+      "Owner": "Lin",
+      "Stakeholders": "KVP, Yuliya, Queenie",
+      "Due Date": "TBD",
+      "Dependency / Blocker": null,
+      "Progress Notes": "Call with Yuliya + Queenie scheduled July 14. Timing for v2 rollout + build timeline to be discussed in call.",
+      "Last Updated": "Jul 13, 2026",
+      "Impact Area": "Ops",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-014",
+      "Project Name": "Tech Ops Tasks",
+      "Deliverable Name": "Julius AI Code Expiry Extension",
+      "Description": "Follow up on Julius institutional code extension — code expiring July 14. Extension request submitted; awaiting response. Needed to continue featuring Julius on the events microsite.",
+      "Deliverable Type": "Other",
+      "Priority": "High",
+      "Status": "In Progress",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique, Jaisa",
+      "Due Date": "Jul 14, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": null,
+      "Last Updated": "Jul 13, 2026",
+      "Impact Area": "Events",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-015",
+      "Project Name": "Tech Ops Tasks",
+      "Deliverable Name": "Troubleshoot PR #4918 — crm-build-alerts Missing Alert",
+      "Description": "Investigate why PR #4918 (Post Workshop Materials build by Jaisa) did not surface in crm-build-alerts channel. Identify and fix alert configuration issue.",
+      "Deliverable Type": "Tech Product",
+      "Priority": "High",
+      "Status": "In Progress",
+      "Owner": "Lin",
+      "Stakeholders": "Jaisa",
+      "Due Date": "Jul 13, 2026",
+      "Dependency / Blocker": null,
+      "Progress Notes": null,
+      "Last Updated": "Jul 13, 2026",
+      "Impact Area": "Ops",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-016",
+      "Project Name": "Socials Automation",
+      "Deliverable Name": "Wiki-based Social Content Pipeline",
+      "Description": "Build the wiki-based social content pipeline tab in Content Studio (Content Pipeline > \"From the Wiki\"). Pulls from the company wiki/brain to auto-generate social content for distribution.",
+      "Deliverable Type": "Tech Product",
+      "Priority": "Medium",
+      "Status": "Not Started",
+      "Owner": "Lin",
+      "Stakeholders": "Dominique",
+      "Due Date": "TBD",
+      "Dependency / Blocker": null,
+      "Progress Notes": "**dependent on Dom's wiki build progress, on when it can be hooked up to the ai crm",
+      "Last Updated": "Jul 13, 2026",
+      "Impact Area": "Ops",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    },
+    {
+      "Deliverable ID": "DEL-017",
+      "Project Name": "Keynotes Ops",
+      "Deliverable Name": "CU Video Assets for Keynote Engine",
+      "Description": "Engage the Creative Upgrade (CU) team to develop video visuals and backgrounds for the keynote engine.",
+      "Deliverable Type": "Video",
+      "Priority": "Medium",
+      "Status": "Not Started",
+      "Owner": "Dominique",
+      "Stakeholders": "Dominique, Bella",
+      "Due Date": "TBD",
+      "Dependency / Blocker": null,
+      "Progress Notes": " To be scoped after Dom's in-person sessions with Bella.",
+      "Last Updated": "Jul 13, 2026",
+      "Impact Area": "Events",
+      "RefLink 1": null,
+      "RefLink 2": null,
+      "RefLink 3": null
+    }
+  ],
+  "lists": {
+    "Owner Names": [
+      "Dominique",
+      "KVP",
+      "Masooma",
+      "Bella",
+      "Jaisa",
+      "Lin"
+    ],
+    "Stakeholder Names": [
+      "Dominique",
+      "KVP",
+      "Masooma",
+      "Bella",
+      "Jaisa",
+      "Lin",
+      "Final Upgrade Company",
+      "Yuliya",
+      "Queenie"
+    ],
+    "Status": [
+      "Not Started",
+      "In Progress",
+      "On Hold",
+      "Complete",
+      "Cancelled"
+    ],
+    "Priority": [
+      "Critical",
+      "High",
+      "Medium",
+      "Low"
+    ],
+    "Impact Areas": [
+      "Events",
+      "Creative Upgrade",
+      "Sales",
+      "Ops",
+      "Marketing",
+      "Product",
+      "SocMed Marketing"
+    ],
+    "Quarters": [
+      "Q1 2026",
+      "Q2 2026",
+      "Q3 2026",
+      "Q4 2026",
+      "Recurring"
+    ],
+    "Deliverable Types": [
+      "Document",
+      "Design Asset",
+      "Video",
+      "Deck",
+      "Report",
+      "Campaign",
+      "Event",
+      "Other",
+      "Tech Product"
+    ]
+  }
 };
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function statusClass(s) { return s ? s.toLowerCase().replace(/\s+/g,'-') : 'not-started'; }
-function badge(s) { return `<span class="badge ${statusClass(s)}">${s||'—'}</span>`; }
-function prio(p) { return p ? `<span class="priority ${p.toLowerCase()}">${p}</span>` : '—'; }
 
-function parseDate(str) {
-  if (!str) return null;
-  const d = new Date(str);
-  return isNaN(d) ? null : d.getTime();
+function isOverdue(dueStr) {
+  if (!dueStr || ['TBD','Recurring','N/A'].includes(dueStr)) return false;
+  const ts = new Date(dueStr).getTime();
+  return !isNaN(ts) && ts < SYNC_TS;
 }
 
-function isRecent(lastUpdated, windowMs = 48 * 60 * 60 * 1000) {
-  const ts = parseDate(lastUpdated);
-  if (!ts) return false;
+function isRecent(dateStr) {
+  if (!dateStr) return false;
+  const ts = new Date(dateStr).getTime();
+  if (isNaN(ts)) return false;
+  const windowMs = 48 * 60 * 60 * 1000;
   return Math.abs(SYNC_TS - ts) <= windowMs;
 }
 
-function isOverdue(dueStr) {
-  if (!dueStr || dueStr === 'TBD' || dueStr === 'Recurring' || dueStr === 'N/A') return false;
-  const ts = parseDate(dueStr);
-  return ts && ts < SYNC_TS;
+function badge(s) {
+  return '<span class="badge ' + statusClass(s) + '">' + (s || '—') + '</span>';
 }
 
-// ── PRIORITIES KANBAN ────────────────────────────────────────────────────────
-function renderPriorities() {
-  // Filter: In Progress + last updated within 48h
+function prio(p) {
+  return p ? '<span class="priority ' + p.toLowerCase() + '">' + p + '</span>' : '—';
+}
+
+function parseDate(s) {
+  if (!s || ['TBD','Recurring','N/A'].includes(s)) return null;
+  const d = new Date(s);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+function getDelsByProject(name) {
+  return DATA.deliverables.filter(d => d['Project Name'] === name);
+}
+
+// ── POPULATE DROPDOWNS ───────────────────────────────────────────────────────
+function populateSelect(id, values) {
+  const el = document.getElementById(id);
+  values.forEach(v => {
+    const o = document.createElement('option');
+    o.value = v; o.textContent = v;
+    el.appendChild(o);
+  });
+}
+
+function initDropdowns() {
+  const unique = (arr, key) => [...new Set(arr.map(x => x[key]).filter(Boolean))].sort();
+
+  populateSelect('proj-status-filter',   unique(DATA.projects, 'Status'));
+  populateSelect('proj-quarter-filter',  unique(DATA.projects, 'Quarter'));
+  populateSelect('proj-priority-filter', unique(DATA.projects, 'Priority'));
+
+  populateSelect('del-status-filter',   unique(DATA.deliverables, 'Status'));
+  populateSelect('del-project-filter',  unique(DATA.deliverables, 'Project Name'));
+  populateSelect('del-priority-filter', unique(DATA.deliverables, 'Priority'));
+  populateSelect('del-impact-filter',   unique(DATA.deliverables, 'Impact Area'));
+}
+
+// ── KANBAN / PRIORITIES ──────────────────────────────────────────────────────
+function renderKanban() {
+  document.getElementById('sync-date').textContent = SYNC_DATE;
+
+  const inProg    = DATA.deliverables.filter(d => d.Status === 'In Progress').length;
+  const notStart  = DATA.deliverables.filter(d => d.Status === 'Not Started').length;
+  const onHold    = DATA.deliverables.filter(d => d.Status === 'On Hold').length;
+  const completed = DATA.deliverables.filter(d => d.Status === 'Completed').length;
+
+  document.getElementById('global-stats').innerHTML =
+    '<span><span class="dot blue"></span>' + inProg    + ' in progress</span>' +
+    '<span><span class="dot" style="background:var(--muted)"></span>' + notStart  + ' not started</span>' +
+    '<span><span class="dot yellow"></span>' + onHold    + ' on hold</span>' +
+    '<span><span class="dot green"></span>' + completed + ' completed</span>';
+
   const priorities = DATA.deliverables.filter(d =>
     d.Status === 'In Progress' && isRecent(d['Last Updated'])
   );
 
-  // Global stats subtitle
-  const counts = {
-    'In Progress': 0, 'Not Started': 0, 'On Hold': 0, 'Completed': 0
-  };
-  DATA.deliverables.forEach(d => { if (counts[d.Status] !== undefined) counts[d.Status]++; });
-  document.getElementById('global-stats').innerHTML = `
-    <span><span class="dot blue"></span>${counts['In Progress']} in progress</span>
-    <span><span class="dot purple"></span>${counts['Not Started']} not started</span>
-    <span><span class="dot yellow"></span>${counts['On Hold']} on hold</span>
-    <span><span class="dot green"></span>${counts['Completed']} completed</span>
-  `;
-
   const container = document.getElementById('kanban-container');
   if (!priorities.length) {
-    container.innerHTML = '<div class="empty-priorities">No deliverables updated in the last 48h — you\'re all caught up!</div>';
+    container.innerHTML = '<div class="empty-priorities">No in-progress deliverables updated in the last 48 hours.</div>';
     return;
   }
 
-  container.innerHTML = `
-    <div class="kanban-scroll">
-      ${priorities.map(d => {
-        const overdue = isOverdue(d['Due Date']);
-        return `
-          <div class="kanban-card ${statusClass(d.Status)}" onclick="openDelModal(${JSON.stringify(d).replace(/"/g,'&quot;')})">
-            <div class="kanban-del-id">${d['Deliverable ID']}</div>
-            <div class="kanban-name">${d['Deliverable Name']}</div>
-            <div class="kanban-project">${d['Project Name']}</div>
-            <div class="kanban-footer">
-              <span class="kanban-due ${overdue ? 'overdue' : ''}">📅 ${d['Due Date'] || 'TBD'}</span>
-              ${prio(d.Priority)}
-            </div>
-          </div>
-        `;
-      }).join('')}
-    </div>
-  `;
+  container.innerHTML =
+    '<div class="kanban-scroll">' +
+    priorities.map(d => {
+      const due = d['Due Date'] || '';
+      const overdue = isOverdue(d['Due Date']);
+      const cls = statusClass(d.Status);
+      return '<div class="kanban-card ' + cls + '" onclick=\'openDelModal(' + JSON.stringify(JSON.stringify(d)) + ')\'>' +
+        '<div class="kanban-del-id">' + d['Deliverable ID'] + '</div>' +
+        '<div class="kanban-name">' + d['Deliverable Name'] + '</div>' +
+        '<div class="kanban-project">' + d['Project Name'] + '</div>' +
+        '<div class="kanban-footer">' +
+          '<span class="kanban-due' + (overdue ? ' overdue' : '') + '">' + (due || '—') + '</span>' +
+          prio(d.Priority) +
+        '</div>' +
+      '</div>';
+    }).join('') +
+    '</div>';
 }
 
 // ── PROJECTS ─────────────────────────────────────────────────────────────────
-function getDelsByProject(projectName) {
-  return DATA.deliverables.filter(d => d['Project Name'] === projectName);
-}
-
 function renderProjects(list) {
-  const grid = document.getElementById('projects-grid');
   document.getElementById('proj-count').textContent = list.length;
-  if (!list.length) { grid.innerHTML = '<div class="empty-state">No projects match your filters.</div>'; return; }
+  const grid = document.getElementById('projects-grid');
+  if (!list.length) {
+    grid.innerHTML = '<div class="empty-state">No projects match your filters.</div>';
+    return;
+  }
 
   grid.innerHTML = list.map(p => {
     const dels = getDelsByProject(p['Project Name']);
+    const total = dels.length;
+    const completed = dels.filter(d => d.Status === 'Completed').length;
+    const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+
     const statusCounts = {};
     dels.forEach(d => { statusCounts[d.Status] = (statusCounts[d.Status] || 0) + 1; });
-    const total = dels.length;
-    const done  = statusCounts['Completed'] || 0;
-    const pct   = total ? Math.round((done / total) * 100) : 0;
 
-    const breakdownParts = [];
-    if (statusCounts['In Progress']) breakdownParts.push(`<span class="del-count-item"><span class="dot blue"></span>${statusCounts['In Progress']} in progress</span>`);
-    if (statusCounts['On Hold'])     breakdownParts.push(`<span class="del-count-item"><span class="dot yellow"></span>${statusCounts['On Hold']} on hold</span>`);
-    if (statusCounts['Not Started']) breakdownParts.push(`<span class="del-count-item"><span class="dot purple"></span>${statusCounts['Not Started']} not started</span>`);
-    if (statusCounts['Completed'])   breakdownParts.push(`<span class="del-count-item"><span class="dot green"></span>${statusCounts['Completed']} done</span>`);
+    let breakdownParts = [];
+    if (statusCounts['In Progress'])  breakdownParts.push('<span class="del-count-item"><span class="dot blue"></span>' + statusCounts['In Progress'] + ' in progress</span>');
+    if (statusCounts['On Hold'])      breakdownParts.push('<span class="del-count-item"><span class="dot yellow"></span>' + statusCounts['On Hold'] + ' on hold</span>');
+    if (statusCounts['Not Started'])  breakdownParts.push('<span class="del-count-item"><span class="dot" style="background:var(--muted)"></span>' + statusCounts['Not Started'] + ' not started</span>');
+    if (statusCounts['Completed'])    breakdownParts.push('<span class="del-count-item"><span class="dot green"></span>' + statusCounts['Completed'] + ' done</span>');
 
-    return `
-      <div class="project-card" onclick="openProjectModal(${JSON.stringify(p).replace(/"/g,'&quot;')})">
-        <div class="project-card-top">
-          <div>
-            <div class="project-id">${p['Project ID']}</div>
-            <div class="project-name">${p['Project Name']}</div>
-          </div>
-          ${badge(p.Status)}
-        </div>
-        <div class="project-desc">${p['Objective / Description'] || ''}</div>
-        ${total > 0 ? `
-          <div class="del-count-bar">
-            <span class="del-count-total">${total} deliverable${total !== 1 ? 's' : ''}</span>
-            <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
-            <div class="del-count-breakdown">${breakdownParts.join('')}</div>
-          </div>
-        ` : ''}
-        <div class="project-meta">
-          ${prio(p.Priority)}
-          <span class="tag">📅 ${p.Quarter || '—'}</span>
-          <span class="tag">👤 ${p.Owner || '—'}</span>
-          <span class="tag">🏷 ${p['Impact Area'] || '—'}</span>
-        </div>
-      </div>
-    `;
+    const delBar = total > 0 ?
+      '<div class="del-count-bar">' +
+        '<span class="del-count-total">' + total + ' deliverables</span>' +
+        '<div class="progress-track"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
+        '<div class="del-count-breakdown">' + breakdownParts.join('') + '</div>' +
+      '</div>' : '';
+
+    return '<div class="project-card" onclick=\'openProjectModal(' + JSON.stringify(JSON.stringify(p)) + ')\'>' +
+      '<div class="project-card-top">' +
+        '<div><div class="project-id">' + p['Project ID'] + '</div>' +
+        '<div class="project-name">' + p['Project Name'] + '</div></div>' +
+        badge(p.Status) +
+      '</div>' +
+      '<div class="project-desc">' + (p['Objective / Description'] || '') + '</div>' +
+      delBar +
+      '<div class="project-meta">' +
+        prio(p.Priority) +
+        (p.Quarter ? '<span class="tag">📅 ' + p.Quarter + '</span>' : '') +
+        (p['Impact Area'] ? '<span class="tag">🎯 ' + p['Impact Area'] + '</span>' : '') +
+      '</div>' +
+    '</div>';
   }).join('');
 }
 
@@ -634,20 +1105,18 @@ function renderDeliverables(list) {
   const tbody = document.getElementById('del-tbody');
   document.getElementById('del-count').textContent = list.length;
   if (!list.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No deliverables match your filters.</td></tr>'; return; }
-  tbody.innerHTML = list.map(d => `
-    <tr onclick="openDelModal(${JSON.stringify(d).replace(/"/g,'&quot;')})">
-      <td>
-        <div class="del-id">${d['Deliverable ID']}</div>
-        <div class="del-name">${d['Deliverable Name']}</div>
-        <div class="del-project">${d['Project Name']}</div>
-      </td>
-      <td>${badge(d.Status)}</td>
-      <td>${prio(d.Priority)}</td>
-      <td style="white-space:nowrap;color:var(--muted);font-size:12px">${d['Due Date'] || '—'}</td>
-      <td style="font-size:12px">${d.Owner || '—'}</td>
-      <td style="font-size:12px;color:var(--muted)">${d['Impact Area'] || '—'}</td>
-    </tr>
-  `).join('');
+  tbody.innerHTML = list.map(d =>
+    '<tr onclick=\'openDelModal(' + JSON.stringify(JSON.stringify(d)) + ')\'>' +
+      '<td><div class="del-id">' + d['Deliverable ID'] + '</div>' +
+          '<div class="del-name">' + d['Deliverable Name'] + '</div>' +
+          '<div class="del-project">' + d['Project Name'] + '</div></td>' +
+      '<td>' + badge(d.Status) + '</td>' +
+      '<td>' + prio(d.Priority) + '</td>' +
+      '<td style="white-space:nowrap;color:var(--muted);font-size:12px">' + (d['Due Date'] || '—') + '</td>' +
+      '<td style="font-size:12px">' + (d.Owner || '—') + '</td>' +
+      '<td style="font-size:12px;color:var(--muted)">' + (d['Impact Area'] || '—') + '</td>' +
+    '</tr>'
+  ).join('');
 }
 
 function filterDeliverables() {
@@ -666,30 +1135,87 @@ function resetDelFilters() {
   renderDeliverables(DATA.deliverables);
 }
 
-// ── MODALS ────────────────────────────────────────────────────────────────────
-function openProjectModal(p) {
+// ── MODALS ───────────────────────────────────────────────────────────────────
+function openProjectModal(pJson) {
+  const p = typeof pJson === 'string' ? JSON.parse(pJson) : pJson;
   const dels = getDelsByProject(p['Project Name']);
-  document.getElementById('modal-content').innerHTML = `
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-id">${p['Project ID']}</div>
-    <div class="modal-title">${p['Project Name']}</div>
-    <div class="modal-badges">${badge(p.Status)}${prio(p.Priority)}<span class="tag">📅 ${p.Quarter||'—'}</span><span class="tag">🏷 ${p['Impact Area']||'—'}</span></div>
-    <div class="modal-meta-grid">
-      <div><div class="modal-meta-key">Owner</div><div class="modal-meta-val">${p.Owner||'—'}</div></div>
-      <div><div class="modal-meta-key">Stakeholders</div><div class="modal-meta-val">${p.Stakeholders||'—'}</div></div>
-      <div><div class="modal-meta-key">Target Completion</div><div class="modal-meta-val">${p['Target Completion Date']||'—'}</div></div>
-      <div><div class="modal-meta-key">Deliverables</div><div class="modal-meta-val">${dels.length}</div></div>
-    </div>
-    <div class="modal-section">
-      <div class="modal-section-label">Objective</div>
-      <div class="modal-section-content">${p['Objective / Description']||'—'}</div>
-    </div>
-    ${p.Notes ? `<div class="modal-section"><div class="modal-section-label">Notes</div><div class="progress-box">${p.Notes}</div></div>` : ''}
-    ${dels.length ? `
-      <hr class="modal-divider"/>
-      <div class="modal-section-label">Deliverables (${dels.length})</div>
-      <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
-        ${dels.map(d=>`
-          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="openDelModal(${JSON.stringify(d).replace(/"/g,'&quot;')})">
-            <div><div style="font-size:10px;color:var(--muted);font-family:monospace">${d['Deliverable ID']}</div><div style="font-size:13px;font-weight:600">${d['Deliverable Name']}</div></div>
-            <div style="display:flex;gap:6px;align
+  let delsHtml = '';
+  if (dels.length) {
+    delsHtml = '<hr class="modal-divider"/>' +
+      '<div class="modal-section-label">Deliverables (' + dels.length + ')</div>' +
+      '<div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">' +
+      dels.map(d =>
+        '<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick=\'openDelModal(' + JSON.stringify(JSON.stringify(d)) + ')\'>' +
+          '<div><div style="font-size:10px;color:var(--muted);font-family:monospace">' + d['Deliverable ID'] + '</div>' +
+          '<div style="font-size:13px;font-weight:600">' + d['Deliverable Name'] + '</div></div>' +
+          '<div style="display:flex;gap:6px;align-items:center">' + badge(d.Status) + prio(d.Priority) + '</div>' +
+        '</div>'
+      ).join('') +
+      '</div>';
+  }
+
+  document.getElementById('modal-content').innerHTML =
+    '<button class="modal-close" onclick="closeModal()">✕</button>' +
+    '<div class="modal-id">' + p['Project ID'] + '</div>' +
+    '<div class="modal-title">' + p['Project Name'] + '</div>' +
+    '<div class="modal-badges">' + badge(p.Status) + prio(p.Priority) +
+      (p.Quarter ? '<span class="tag">📅 ' + p.Quarter + '</span>' : '') +
+      (p['Impact Area'] ? '<span class="tag">🎯 ' + p['Impact Area'] + '</span>' : '') +
+    '</div>' +
+    '<div class="modal-meta-grid">' +
+      '<div><div class="modal-meta-key">Owner</div><div class="modal-meta-val">' + (p.Owner || '—') + '</div></div>' +
+      '<div><div class="modal-meta-key">Stakeholders</div><div class="modal-meta-val">' + (p.Stakeholders || '—') + '</div></div>' +
+      '<div><div class="modal-meta-key">Target Completion</div><div class="modal-meta-val">' + (p['Target Completion Date'] || '—') + '</div></div>' +
+      '<div><div class="modal-meta-key">Deliverables</div><div class="modal-meta-val">' + dels.length + '</div></div>' +
+    '</div>' +
+    '<div class="modal-section"><div class="modal-section-label">Objective</div>' +
+      '<div class="modal-section-content">' + (p['Objective / Description'] || '—') + '</div></div>' +
+    (p.Notes ? '<div class="modal-section"><div class="modal-section-label">Notes</div><div class="progress-box">' + p.Notes + '</div></div>' : '') +
+    delsHtml;
+
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function openDelModal(dJson) {
+  const d = typeof dJson === 'string' ? JSON.parse(dJson) : dJson;
+  const overdue = isOverdue(d['Due Date']);
+
+  document.getElementById('modal-content').innerHTML =
+    '<button class="modal-close" onclick="closeModal()">✕</button>' +
+    '<div class="modal-id">' + d['Deliverable ID'] + '</div>' +
+    '<div class="modal-title">' + d['Deliverable Name'] + '</div>' +
+    '<div class="modal-badges">' + badge(d.Status) + prio(d.Priority) +
+      (d['Impact Area'] ? '<span class="tag">🎯 ' + d['Impact Area'] + '</span>' : '') +
+      (d['Deliverable Type'] ? '<span class="tag">' + d['Deliverable Type'] + '</span>' : '') +
+    '</div>' +
+    '<div class="modal-meta-grid">' +
+      '<div><div class="modal-meta-key">Project</div><div class="modal-meta-val">' + (d['Project Name'] || '—') + '</div></div>' +
+      '<div><div class="modal-meta-key">Owner</div><div class="modal-meta-val">' + (d.Owner || '—') + '</div></div>' +
+      '<div><div class="modal-meta-key">Due Date</div><div class="modal-meta-val" style="' + (overdue ? 'color:var(--red)' : '') + '">' + (d['Due Date'] || '—') + (overdue ? ' ⚠️' : '') + '</div></div>' +
+      '<div><div class="modal-meta-key">Last Updated</div><div class="modal-meta-val">' + (d['Last Updated'] || '—') + '</div></div>' +
+    '</div>' +
+    (d.Description ? '<div class="modal-section"><div class="modal-section-label">Description</div><div class="modal-section-content">' + d.Description + '</div></div>' : '') +
+    (d['Dependency / Blocker'] ? '<div class="modal-section"><div class="modal-section-label">Blocker / Dependency</div><div class="blocker-box">' + d['Dependency / Blocker'] + '</div></div>' : '') +
+    (d['Progress Notes'] ? '<div class="modal-section"><div class="modal-section-label">Progress Notes</div><div class="progress-box">' + d['Progress Notes'] + '</div></div>' : '');
+
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+function init() {
+  initDropdowns();
+  renderKanban();
+  renderProjects(DATA.projects);
+  renderDeliverables(DATA.deliverables);
+}
+
+init();
+</script>
+</body>
+</html>
